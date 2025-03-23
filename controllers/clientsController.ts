@@ -21,16 +21,75 @@ const clients: Client[] = [
 ];
 
 class clientsController {
-    static listProducts = (req: Request, res: Response, next: NextFunction) => {
+    static listClients = (req: Request, res: Response, next: NextFunction) => {
         try {
 
-        } catch (e) {
+            res.json(clients)
 
+            next()
+
+        } catch (e) {
+            res.status(500).json({ message: "Erro interno do servidor" })
         }
     }
 
-    static listProductsById = (req: Request, res: Response, next: NextFunction) => {
+    static listClientsById = (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const client = clients.find((client) => {
+                return client.id === Number(req.params.id);
+            });
 
+            if (client != null) {
+                res.status(200).send(client)
+            } else {
+                res.status(404).send("Cliente não encontrado.")
+            }
+
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    static registerClient = (req: Request, res: Response, next: NextFunction) => {
+        try {
+
+            const client = req.body;
+
+            clients.push(client);
+
+            res.status(201).send("Cliente adicionado com sucesso.");
+
+        } catch (e) {
+            next(e)
+        }
+    }
+
+    // static updateProduct = (req: Request, res: Response, next: NextFunction) => {
+    //     try {
+
+    //     } catch (e) {
+    //         next(e)
+    //     }
+    // }
+
+    static deleteProduct = (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const client = clients.find((client) => {
+                return client.id === Number(req.params.id);
+            });
+
+            if (!client) {
+                res.status(404).send("Cliente não encontrado.");
+                return;
+            }
+
+            const index = clients.indexOf(client);
+            clients.splice(index, 1);
+
+            res.send("Cliente removido com sucesso.");
+        } catch (e) {
+            next(e)
+        }
     }
 }
 

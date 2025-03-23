@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Product } from "../models";
+import NotFound from '../errors/NotFound';
 
 const products: Product[] = [
     {
@@ -45,10 +46,10 @@ class ProductController {
                 return product.id === Number(req.params.id);
             });
 
-            if (product !== null) {
+            if (product != null) {
                 res.status(200).send(product)
             } else {
-                next()
+                res.status(404).send("Produto não encontrado.")
             }
 
         } catch (e) {
@@ -85,7 +86,7 @@ class ProductController {
             });
 
             if (!product) {
-                res.status(404).send();
+                res.status(404).send("Produto não encontrado.");
                 return;
             }
 
