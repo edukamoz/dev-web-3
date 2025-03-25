@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
 import { Product } from "../models";
-import NotFound from '../errors/NotFound';
 
 const products: Product[] = [
     {

@@ -7,6 +7,6 @@ router
     .get("/clients", clientsController.listClients)
     .get("/clients/:id", clientsController.listClientsById)
     .post("/clients", clientsController.registerClient)
-    .delete("/clients/:id", clientsController.deleteProduct)
+    .delete("/clients/:id", clientsController.deleteClient)
 
 export default router;

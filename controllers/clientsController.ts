@@ -64,7 +64,7 @@ class clientsController {
         }
     }
 
-    // static updateProduct = (req: Request, res: Response, next: NextFunction) => {
+    // static updateClient = (req: Request, res: Response, next: NextFunction) => {
     //     try {
 
     //     } catch (e) {
@@ -72,7 +72,7 @@ class clientsController {
     //     }
     // }
 
-    static deleteProduct = (req: Request, res: Response, next: NextFunction) => {
+    static deleteClient = (req: Request, res: Response, next: NextFunction) => {
         try {
             const client = clients.find((client) => {
                 return client.id === Number(req.params.id);
