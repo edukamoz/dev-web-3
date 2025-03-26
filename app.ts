@@ -1,5 +1,5 @@
 // Importação da biblioteca Express
-import express, { Request, Response } from "express";
+import express from "express";
 import routes from "./routes";
 
 // Criação da aplicação

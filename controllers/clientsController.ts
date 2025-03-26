@@ -64,13 +64,22 @@ class clientsController {
         }
     }
 
-    // static updateClient = (req: Request, res: Response, next: NextFunction) => {
-    //     try {
-
-    //     } catch (e) {
-    //         next(e)
-    //     }
-    // }
+    static updateClient = (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = Number(req.params.id); //converte para número
+            const client = req.body; //pega o corpo da requisição
+            const index = clients.findIndex((client) => client.id === id);  //procura o índice do produto
+            
+            if (index === -1) { //se não encontrar o produto
+                res.status(404).send(); //retorna erro 404
+                return; //retorna
+            }
+            clients[index] = client; //atualiza o produto no índice
+            res.status(200).send(); //retorna status 200
+        } catch (e) {
+            next(e)
+        }
+    }
 
     static deleteClient = (req: Request, res: Response, next: NextFunction) => {
         try {

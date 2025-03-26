@@ -70,13 +70,23 @@ class ProductController {
         }
     }
 
-    // static updateProduct = (req: Request, res: Response, next: NextFunction) => {
-    //     try {
-
-    //     } catch (e) {
-    //         next(e)
-    //     }
-    // }
+    static updateProduct = (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const id = Number(req.params.id); //converte para número
+            const product = req.body; //pega o corpo da requisição
+            const index = products.findIndex((product) => product.id === id);  //procura o índice do produto
+            
+            if (index === -1) { //se não encontrar o produto
+                res.status(404).send(); //retorna erro 404
+                return; //retorna
+            }
+            products[index] = product; //atualiza o produto no índice
+            res.status(200).send(); //retorna status 200
+            
+        } catch (e) {
+            next(e)
+        }
+    }
 
     static deleteProduct = (req: Request, res: Response, next: NextFunction) => {
         try {
