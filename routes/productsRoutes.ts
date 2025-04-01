@@ -4,10 +4,10 @@ import ProductController from "../controllers/productController";
 const router = express.Router();
 
 router
-    .get("/products", ProductController.listProducts)
-    .get("/products/:id", ProductController.listProductsById)
-    .post("/products", ProductController.registerProduct)
-    .put("/products/:id", ProductController.updateProduct)
-    .delete("/products/:id", ProductController.deleteProduct)
+    .get("/products", ProductController.listAll)
+    .get("/products/:id", ProductController.listById)
+    .post("/products", ProductController.register)
+    .put("/products/:id", ProductController.update)
+    .delete("/products/:id", ProductController.delete)
 
 export default router;

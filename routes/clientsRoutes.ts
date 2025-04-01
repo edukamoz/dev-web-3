@@ -4,10 +4,10 @@ import clientsController from "../controllers/clientsController";
 const router = express.Router();
 
 router
-    .get("/clients", clientsController.listClients)
-    .get("/clients/:id", clientsController.listClientsById)
-    .post("/clients", clientsController.registerClient)
-    .put("/clients/:id", clientsController.updateClient)
-    .delete("/clients/:id", clientsController.deleteClient)
+    .get("/clients", clientsController.listAll)
+    .get("/clients/:id", clientsController.listById)
+    .post("/clients", clientsController.register)
+    .put("/clients/:id", clientsController.update)
+    .delete("/clients/:id", clientsController.delete)
 
 export default router;

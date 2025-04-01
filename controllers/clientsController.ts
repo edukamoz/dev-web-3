@@ -21,10 +21,22 @@ const clients: Client[] = [
 ];
 
 class clientsController {
-    static listClients = (req: Request, res: Response, next: NextFunction) => {
+    static listAll = (req: Request, res: Response, next: NextFunction) => {
         try {
 
-            res.json(clients)
+            let filteredResult = clients;
+
+            // Implementar busca pelos filtros
+            const { name } = req.query;
+
+            // Filtros de texto devem buscar por partes das palavras e ignorar maiúsculas
+            if (name) {
+                filteredResult = filteredResult.filter(client =>
+                    client.name.toLowerCase().includes((name as string).toLowerCase())
+                );
+            }
+
+            res.json(filteredResult)
 
             next()
 
@@ -33,7 +45,7 @@ class clientsController {
         }
     }
 
-    static listClientsById = (req: Request, res: Response, next: NextFunction) => {
+    static listById = (req: Request, res: Response, next: NextFunction) => {
         try {
             const client = clients.find((client) => {
                 return client.id === Number(req.params.id);
@@ -50,7 +62,7 @@ class clientsController {
         }
     }
 
-    static registerClient = (req: Request, res: Response, next: NextFunction) => {
+    static register = (req: Request, res: Response, next: NextFunction) => {
         try {
 
             const client = req.body;
@@ -64,12 +76,12 @@ class clientsController {
         }
     }
 
-    static updateClient = (req: Request, res: Response, next: NextFunction) => {
+    static update = (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id); //converte para número
             const client = req.body; //pega o corpo da requisição
             const index = clients.findIndex((client) => client.id === id);  //procura o índice do produto
-            
+
             if (index === -1) { //se não encontrar o produto
                 res.status(404).send(); //retorna erro 404
                 return; //retorna
@@ -81,7 +93,7 @@ class clientsController {
         }
     }
 
-    static deleteClient = (req: Request, res: Response, next: NextFunction) => {
+    static delete = (req: Request, res: Response, next: NextFunction) => {
         try {
             const client = clients.find((client) => {
                 return client.id === Number(req.params.id);

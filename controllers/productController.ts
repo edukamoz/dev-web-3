@@ -27,10 +27,40 @@ const products: Product[] = [
 ];
 
 class ProductController {
-    static listProducts = (req: Request, res: Response, next: NextFunction) => {
+    static listAll = (req: Request, res: Response, next: NextFunction) => {
         try {
 
-            res.json(products)
+            let filteredResult = products;
+
+            // Implementar busca pelos filtros
+            const { name, brand, supplier, stockId } = req.query;
+
+            // Filtros de texto devem buscar por partes das palavras e ignorar maiúsculas
+            if (name) {
+                filteredResult = filteredResult.filter(product =>
+                    product.name.toLowerCase().includes((name as string).toLowerCase())
+                );
+            }
+
+            if (brand) {
+                filteredResult = filteredResult.filter(product =>
+                    product.brand.toLowerCase().includes((brand as string).toLowerCase())
+                );
+            }
+
+            if (supplier) {
+                filteredResult = filteredResult.filter(product =>
+                    product.supplier.toLowerCase().includes((supplier as string).toLowerCase())
+                );
+            }
+
+            if (stockId) {
+                filteredResult = filteredResult.filter(product =>
+                    product.stockId === Number(stockId)
+                );
+            }
+
+            res.json(filteredResult)
 
             next()
 
@@ -39,7 +69,7 @@ class ProductController {
         }
     }
 
-    static listProductsById = (req: Request, res: Response, next: NextFunction) => {
+    static listById = (req: Request, res: Response, next: NextFunction) => {
         try {
             const product = products.find((product) => {
                 return product.id === Number(req.params.id);
@@ -56,7 +86,7 @@ class ProductController {
         }
     }
 
-    static registerProduct = (req: Request, res: Response, next: NextFunction) => {
+    static register = (req: Request, res: Response, next: NextFunction) => {
         try {
 
             const product = req.body;
@@ -70,25 +100,25 @@ class ProductController {
         }
     }
 
-    static updateProduct = (req: Request, res: Response, next: NextFunction) => {
+    static update = (req: Request, res: Response, next: NextFunction) => {
         try {
             const id = Number(req.params.id); //converte para número
             const product = req.body; //pega o corpo da requisição
             const index = products.findIndex((product) => product.id === id);  //procura o índice do produto
-            
+
             if (index === -1) { //se não encontrar o produto
                 res.status(404).send(); //retorna erro 404
                 return; //retorna
             }
             products[index] = product; //atualiza o produto no índice
             res.status(200).send(); //retorna status 200
-            
+
         } catch (e) {
             next(e)
         }
     }
 
-    static deleteProduct = (req: Request, res: Response, next: NextFunction) => {
+    static delete = (req: Request, res: Response, next: NextFunction) => {
         try {
             const product = products.find((product) => {
                 return product.id === Number(req.params.id);
