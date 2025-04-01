@@ -22,7 +22,7 @@ const employees: Employee[] = [
     },
 ];
 
-class employeeController {
+class EmployeeController {
     static listAll = (req: Request, res: Response, next: NextFunction) => {
         try {
 
@@ -129,4 +129,4 @@ class employeeController {
     }
 }
 
-export default employeeController
+export default EmployeeController;
